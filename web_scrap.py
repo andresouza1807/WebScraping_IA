@@ -6,31 +6,34 @@ class WebScrapingImages:
     def __init__(self, url):
         self.url = url
 
-    def get_images(self):
+    def get_images(self,output_file):
         soup = bs(requests.get(self.url).content, 'html.parser')
-        tag = soup.find_all('img', class_='img-responsive')
-        for tag in tag:
-            print(tag.get('src'))
+        tags = soup.find_all('img', src=re.compile(r'^http://'))
+        with open(output_file,'w', encoding='utf-8') as file:
+            for tag in tags:
+                file.write(tag.get('src') + '\n')
 
 class WebScrapingText:
     def __init__(self, url):
         self.url = url
 
-    def get_text(self):
+    def get_text(self,output_file):
         soup = bs(requests.get(self.url).content, 'html.parser')
-        tag = soup.find_all('p')
-        for tag in tag:
-            print(tag.text)
+        tags = soup.find_all('p')
+        with open(output_file, 'w', encoding='utf-8') as file:
+            for tag in tags:
+                file.write(tag.text)        
 
 
 class WebScrapingLink:
     def __init__(self, url):
         self.url = url
 
-    def get_links(self):
+    def get_links(self,output_file):
         soup = bs(requests.get(self.url).content, 'html.parser')
         # print(soup)
         tag = soup.find_all('a', href=re.compile(r'^https://')) 
-        # print(tag)     
-        for tag in tag:
-            print(tag.get('href'))
+        # print(tag) 
+        with open(output_file, 'w', encoding='utf-8') as file:    
+            for tag in tag:
+                file.write(tag.get('href') + '\n')

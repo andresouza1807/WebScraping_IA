@@ -2,7 +2,6 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage, SystemMessage
 import os
-from dotenv import load_dotenv
 import getpass
 
 if not os.environ.get("GROQ_API_KEY"):
@@ -12,7 +11,7 @@ model = ChatGroq(model='llama-3.3-70b-versatile', )
 
 message = [
     HumanMessage("Olá, tudo bem?"),
-    SystemMessage("traduza para o portugues para o japones ?")
+    SystemMessage("traduza do portugues para o japones ?")
 ]
 
 model.invoke(message)
